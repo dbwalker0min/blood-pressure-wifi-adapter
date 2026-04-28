@@ -1,0 +1,33 @@
+{
+  "files.autoSave": "afterDelay",
+  "files.associations": {
+    "devices/*.yaml": "esphome",
+    "packages/*.yaml": "yaml"
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/**": true,
+    "**/.pio/**": true,
+    "**/build/**": true,
+    "**/.esphome/**": true
+  },
+  "VsCodeTaskButtons.tasks": [
+    {
+      "label": "Build",
+      "task": "ESPHome: Compile",
+    },
+    {
+      "label": "Upload (OTA)",
+      "task": "ESPHome: Upload (OTA)",
+    },
+    {
+      "label": "Upload (USB)",
+      "task": "ESPHome: Upload (USB)",
+    },
+    {
+      "label": "View Logs",
+      "task": "ESPHome: Logs",
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+
+# Create a simple web server. Usefull for debugging and testing
+web_server:
+  port: 80
+  version: 3
+
+# Make sure the logging level is debug
+logger:
+  level: DEBUG
+

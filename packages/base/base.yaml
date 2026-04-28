@@ -1,0 +1,35 @@
+esphome:
+  name: "${name}"
+  friendly_name: "${friendly_name}"
+  name_add_mac_suffix: true
+  min_version: 2024.6.0
+
+
+# Enable logging
+logger:
+  level: INFO
+
+# Encrypt API communication with a key from secrets.yaml
+api:
+  encryption:
+    key: "${api_key}"
+
+# Enable OTA updates   
+ota:
+  - platform: esphome
+
+# Connect to the given network by default, fallback to AP mode with a captive portal in case of connection failure
+wifi:
+  ssid: "${wifi_ssid}"
+  password: "${wifi_password}"
+  ap:
+    # Use the default SSID which will append the MAC suffix
+    password: ${ap_password}
+
+# Captive portal when wifi connection fails. Then, it will use the above AP to connect to and fix wifi credentials.
+captive_portal:
+
+# Disable mDNS because the IoT devices are on a separate network and mDNS doesn't work across subnets
+mdns:
+  disabled: true
+

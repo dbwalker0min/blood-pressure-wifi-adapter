@@ -1,0 +1,41 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "ESPHome: Compile",
+      "type": "shell",
+      "command": "esphome compile devices/bp_wifi_adapter.yaml",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "ESPHome: Upload (OTA)",
+      "type": "shell",
+      "problemMatcher": [],
+      "command": "esphome upload devices/bp_wifi_adapter.yaml",
+    },
+    {
+      "label": "ESPHome: Logs",
+      "type": "shell",
+      "problemMatcher": [],
+      "command": "esphome logs devices/bp_wifi_adapter.yaml"
+    },
+    {
+      "label": "ESPHome: Upload (USB)",
+      "type": "shell",
+      "problemMatcher": [],
+      "command": "esphome upload devices/bp_wifi_adapter.yaml --device ${input:serial_port}",
+    }
+  ],
+  "inputs": [
+    {
+      "id": "serial_port",
+      "type": "promptString",
+      "description": "Enter the serial port (e.g., COM3 or /dev/ttyUSB0):",
+      "default": ""
+    }
+  ],
+} 

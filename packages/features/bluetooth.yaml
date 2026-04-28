@@ -1,0 +1,14 @@
+esp32_ble_tracker:
+
+
+ble_client:
+  - mac_address: FF:FF:11:1D:7B:8F
+    id: bp_monitor
+    auto_connect: true
+    on_connect:
+      then:
+        - logger.log: "Connected to Blood Pressure Monitor"
+    on_disconnect:
+      then:
+        - logger.log: "Disconnected from Blood Pressure Monitor"
+        
