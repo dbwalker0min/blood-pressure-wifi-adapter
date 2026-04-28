@@ -12,3 +12,62 @@ ble_client:
       then:
         - logger.log: "Disconnected from Blood Pressure Monitor"
         
+text_sensor:
+  - platform: template
+    name: "BP Reading"
+    id: bp_reading
+
+  - platform: ble_client
+    ble_client_id: bp_monitor
+    id: bp_raw_ble
+    internal: true
+    service_uuid: 'fff0'
+    characteristic_uuid: 'fff1'
+    notify: true
+    update_interval: never
+    on_notify:
+      then:
+        - lambda: |-
+            const auto &d = x;
+
+            // Final packet: FD FD FC ss dd pulse 0D 0A
+            if (d.size() == 8 &&
+                (uint8_t)d[0] == 0xFD &&
+                (uint8_t)d[1] == 0xFD &&
+                (uint8_t)d[2] == 0xFC &&
+                (uint8_t)d[6] == 0x0D &&
+                (uint8_t)d[7] == 0x0A) {
+
+              uint8_t sys = d[3];
+              uint8_t dia = d[4];
+              uint8_t hr = d[5];
+
+              id(systolic).publish_state(sys);
+              id(diastolic).publish_state(dia);
+              id(pulse).publish_state(hr);
+
+              ESP_LOGI("bp_monitor", "BP: %u/%u, %u bpm", sys, dia, hr);
+            }
+    
+sensor:
+  - platform: template
+    name: "Systolic Pressure"
+    id: systolic
+    unit_of_measurement: "mmHg"
+    accuracy_decimals: 0
+    icon: mdi:blood_pressure
+
+  - platform: template
+    name: "Diastolic Pressure"
+    id: diastolic
+    unit_of_measurement: "mmHg"
+    accuracy_decimals: 0
+    icon: mdi:blood_pressure
+
+  - platform: template
+    name: "Pulse"
+    id: pulse
+    unit_of_measurement: "bpm"
+    accuracy_decimals: 0
+    icon: mdi:heart-pulse
+    
