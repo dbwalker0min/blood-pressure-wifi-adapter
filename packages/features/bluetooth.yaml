@@ -2,7 +2,7 @@ esp32_ble_tracker:
 
 
 ble_client:
-  - mac_address: FF:FF:11:1D:7B:8F
+  - mac_address: "${bp_monitor_mac}"
     id: bp_monitor
     auto_connect: true
     on_connect:
@@ -16,17 +16,19 @@ text_sensor:
   - platform: template
     name: "BP Reading"
     id: bp_reading
+    icon: mdi:heart-pulse
 
   - platform: ble_client
     ble_client_id: bp_monitor
     id: bp_raw_ble
     internal: true
-    service_uuid: 'fff0'
-    characteristic_uuid: 'fff1'
+    service_uuid: ${bp_monitor_service_uuid}
+    characteristic_uuid: ${bp_monitor_characteristic_uuid}
     notify: true
     update_interval: never
     on_notify:
       then:
+        # This parses the blood pressure reading from the raw BLE data.
         - lambda: |-
             const auto &d = x;
 
@@ -46,23 +48,34 @@ text_sensor:
               id(diastolic).publish_state(dia);
               id(pulse).publish_state(hr);
 
+              // Update the reading count to trigger automations.
+              id(reading_count) += 1;
+              id(reading_count_sensor).publish_state(id(reading_count));
+
+              uint8_t buf[32];
+              snprintf((char*)buf, sizeof(buf), "%u/%u,%u,%u", sys, dia, hr, id(reading_count));
+              id(bp_reading).publish_state((char*)buf);
               ESP_LOGI("bp_monitor", "BP: %u/%u, %u bpm", sys, dia, hr);
             }
     
+globals:
+  - id: reading_count
+    type: uint32_t
+    restore_value: true
+    initial_value: '0'
+
 sensor:
   - platform: template
     name: "Systolic Pressure"
     id: systolic
-    unit_of_measurement: "mmHg"
     accuracy_decimals: 0
-    icon: mdi:blood_pressure
+    icon: mdi:heart-pulse
 
   - platform: template
     name: "Diastolic Pressure"
     id: diastolic
-    unit_of_measurement: "mmHg"
     accuracy_decimals: 0
-    icon: mdi:blood_pressure
+    icon: mdi:heart-pulse
 
   - platform: template
     name: "Pulse"
@@ -70,4 +83,11 @@ sensor:
     unit_of_measurement: "bpm"
     accuracy_decimals: 0
     icon: mdi:heart-pulse
+
+  - platform: template
+    name: "Reading Count"
+    id: reading_count_sensor
+    unit_of_measurement: "readings"
+    accuracy_decimals: 0
+    icon: mdi:counter
     

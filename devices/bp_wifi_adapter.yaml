@@ -4,6 +4,11 @@ substitutions:
   slug: "bp_wifi_adapter"
   friendly_name: "Blood Pressure-WiFi Adapter"
 
+  # Bluetooth MAC address of the blood pressure monitor (must be set by user)
+  bp_monitor_mac: "FF:FF:11:1D:7B:8F"
+  bp_monitor_service_uuid: "fff0"
+  bp_monitor_characteristic_uuid: "fff1"
+
   # get secrets from secrets.yaml
   wifi_ssid: !secret wifi_ssid
   wifi_password: !secret wifi_password
