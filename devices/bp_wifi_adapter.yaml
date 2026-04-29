@@ -3,6 +3,7 @@ substitutions:
   name: "bp-wifi-adapter"
   slug: "bp_wifi_adapter"
   friendly_name: "Blood Pressure-WiFi Adapter"
+  version: "0.0.1"
 
   # Bluetooth MAC address of the blood pressure monitor (must be set by user)
   bp_monitor_mac: "FF:FF:11:1D:7B:8F"

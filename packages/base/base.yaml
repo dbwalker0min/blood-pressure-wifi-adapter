@@ -3,7 +3,17 @@ esphome:
   friendly_name: "${friendly_name}"
   name_add_mac_suffix: true
   min_version: 2024.6.0
+  on_boot:
+    - logger.log: "Booting Blood Pressure WiFi Adapter..."
+    - text_sensor.template.publish:
+        id: firmware_version
+        state: "0.0.1"
 
+text_sensor:
+  - platform: template
+    name: Firmware Version
+    id: firmware_version
+    update_interval: never
 
 # Enable logging
 logger:

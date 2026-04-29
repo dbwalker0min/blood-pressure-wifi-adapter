@@ -7,5 +7,5 @@ sensor:
 # A text sensor for the ESPHome version
 text_sensor:
   - platform: version
-    name: ${friendly_name} ESPHome Version
+    name: ${friendly_name} ESPHome Version 
     
