@@ -15,7 +15,7 @@ This device is a bridge between Bluetooth and Home Assistant. The basic function
     * pulse rate in bpm
     * count of the number of measurements
   * Text sensor with a string in the following form:
-    `sss\ddd,ppp,cnt`, where `sss` is the systolic pressure, `ddd` is the diastolic pressure, `ppp` is the pulse in beats per minute, and `cnt` is the count of blood pressure measurements collected.
+    `sss/ddd,ppp,cnt`, where `sss` is the systolic pressure, `ddd` is the diastolic pressure, `ppp` is the pulse in beats per minute, and `cnt` is the count of blood pressure measurements collected.
 
 ## Set Up and Use
 
