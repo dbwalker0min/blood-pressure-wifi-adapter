@@ -23,7 +23,8 @@ The firmware is compatible with any ESP32 C3 dev kit board. These boards are low
 
 To set up the device, the MAC address *must* be known. One way to find it is with a tool like [LightBlue](https://apps.apple.com/us/app/lightblue/id557428110), which can scan for advertisements. In my case, the Blood Pressure monitor was named "JPD BPM." Once the MAC address is known, this value must be entered in the file `devices/bp_wifi_adapter.yaml` and used as the value for the substitution variable `bp_monitor_mac`. Note that the semicolon between octets is required.
 
-If you're using a different blood pressure monitor, you may also need other values for `bp_monitor_service_uuid` and `bp_monitor_characteristic_uuid`.
+If you're using a different blood pressure monitor, you may also need other values for `bp_monitor_service_uuid` and `bp_monitor_characteristic_uuid`. In the case
+of the Oxline Pressure X Pro, the service ID was 0xfff0, and the characteristic ID was 0xfff1.
 
 ## Limitations
 
